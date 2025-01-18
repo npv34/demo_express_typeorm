@@ -2,7 +2,9 @@ import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import "reflect-metadata";
-import router from "@routers/web.router";
+import webRouter from "@routers/web.router";
+import apiRouter from "@routers/api.router";
+
 import { AppDataSource } from "@databases/data-source";
 dotenv.config();
 
@@ -26,7 +28,8 @@ AppDataSource.initialize().then(() => {
   process.exit(1)  // exit with error code 1 to indicate failure to connect to the database
 });
 
-app.use(router)
+app.use("/", webRouter)
+app.use("/api", apiRouter)
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
