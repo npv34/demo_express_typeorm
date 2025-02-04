@@ -5,7 +5,6 @@ export const blockIP = (request: Request, response: Response, next: NextFunction
     if(listIPBlock.includes(ipClient)){
          response.status(403).json({ status: 403, message: "Forbidden IP"})
     } else {
-        console.log(ipClient)
         next();
     }
 }

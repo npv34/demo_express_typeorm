@@ -1,6 +1,8 @@
 import express, {NextFunction, Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import session from "express-session";
 import "reflect-metadata";
 import webRouter from "@routers/web.router";
 import apiRouter from "@routers/api.router";
@@ -17,14 +19,21 @@ const port = process.env.PORT;
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 // config views engine
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
+// parse cookies
+app.use(cookieParser());
+app.use(session({
+  secret: 'mykey', // ma hoa ID session
+  resave: false, // khong luu lai session neu khong thay doi
+  saveUninitialized: true, // luu lai session khi chua duoc khoi tao
+}))
 
 AppDataSource.initialize().then(() => { 
-    console.log('initialized')
+    console.log('initialized db')
 }).catch(() => {
   console.error('Error while connecting to the database')
   process.exit(1)  // exit with error code 1 to indicate failure to connect to the database

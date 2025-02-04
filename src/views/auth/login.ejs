@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <p><%= errorLogin %></p>
+    <form action="/login" method="post">
+        <label for="femail">Email:</label><br>
+        <input type="email" id="femail" name="email" value="<%= email %>" required><br>
+        <label for="fpassword">Password:</label><br>
+        <input type="password" id="fpassword" name="password" required><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

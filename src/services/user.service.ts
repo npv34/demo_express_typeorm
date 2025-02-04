@@ -9,12 +9,24 @@ class UserService {
     }
 
     static async createUser(data: any) {
-         const {firstName, lastName, isActive} = data
+         const {firstName, lastName, email, password, isActive} = data
          const u1: User = new User();
          u1.firstName = firstName;
          u1.lastName = lastName;
-         u1.isActive = isActive;
+         u1.email = email;
+         u1.password = password;
+         u1.isActive = isActive ? isActive : false;
          return await userRepository.save(u1);
+    }
+
+    static async getAccountByEmailPassword(data: any): Promise<any>  {
+        const {email, password} = data;
+        return await userRepository.findOne({
+            where: {
+                email: email,
+                password: password,
+            }
+        });
     }
 }
 
