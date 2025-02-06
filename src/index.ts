@@ -20,6 +20,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json());
+//config static file
+app.use(express.static('public'));
 
 // config views engine
 app.set('view engine', 'ejs');
