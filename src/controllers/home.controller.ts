@@ -34,7 +34,8 @@ class HomeController {
     }
 
     static async login(req: any, res: Response) {
-        const user: any = await UserService.getAccountByEmailPassword(req.body)
+        const user: any = await UserService.getAccountByEmailPassword(req.body);
+        console.log(user);
         if (user) {
             // luu lai session login
             req.session.regenerate(function (err: any) {
@@ -45,6 +46,7 @@ class HomeController {
             
                 // store user information in session, typically a user id
                 req.session.userIdLogin = user.id;
+                req.session.userLogin = user;
                 // save the session before redirection to ensure page
                 // load does not happen before session is saved
                 req.session.save(function (err: any) {

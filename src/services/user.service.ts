@@ -1,10 +1,14 @@
 import User from "@entity/User";
+import Role from "@entity/Role";
+
 import { AppDataSource } from "@databases/data-source";
 const userRepository = AppDataSource.getRepository(User)
+const roleRepository = AppDataSource.getRepository(Role);
+
+
 class UserService {
     static async getAllUsers(): Promise<User[]> { 
         const data: any = await userRepository.find()
-        console.log(data);
         return data;
     }
 
@@ -16,6 +20,14 @@ class UserService {
          u1.email = email;
          u1.password = password;
          u1.isActive = isActive ? isActive : false;
+         const roleUser = await roleRepository.findOne({
+            where: {
+                id: 2,
+            },
+         });
+         if (roleUser) {
+            u1.role = roleUser;
+         }
          return await userRepository.save(u1);
     }
 
@@ -25,7 +37,8 @@ class UserService {
             where: {
                 email: email,
                 password: password,
-            }
+            },
+            relations: ["role"],
         });
     }
 }

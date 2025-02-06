@@ -1,7 +1,8 @@
 import express, { Express, Request, Response, Router } from "express";
 import HomeController from "@controllers/home.controller";
 import WeatherController from "@controllers/weather.controller";
-import { checkAuth } from "src/middlewares/checkAuth";
+import { checkAuth } from "@middleware/checkAuth";
+import { isAdmin } from "@middleware/isAdmin.midd";
 
 const router: Router = express.Router();
 
@@ -21,7 +22,7 @@ router.post('/register', (req: Request, res: Response) => {
     HomeController.register(req, res);
 });
 
-router.get('/weather/', (req: Request, res: Response) => {
+router.get('/weather/', checkAuth, isAdmin, (req: Request, res: Response) => {
     WeatherController.index(req, res);
 });
 

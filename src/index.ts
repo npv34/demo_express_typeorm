@@ -32,6 +32,12 @@ app.use(session({
   saveUninitialized: true, // luu lai session khi chua duoc khoi tao
 }))
 
+// configure middleware de su dung session trong ejs
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+})
+
 AppDataSource.initialize().then(() => { 
     console.log('initialized db')
 }).catch(() => {
